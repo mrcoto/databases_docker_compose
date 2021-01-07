@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  postgres11:
+    image: "postgres:11"
+    container_name: "postgres11"
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+  mongo:
+    image: mongo
+    container_name: "mongo"
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+  sqlserver2019:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: "sqlserver2019"
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Secret@123
+      MSSQL_PID: Developer
+volumes:
+  pgdata:
+    external: true
+networks:
+      default:
+        external:
+          name: local-network
