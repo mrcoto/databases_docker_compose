@@ -27,8 +27,28 @@ services:
       ACCEPT_EULA: Y
       SA_PASSWORD: Secret@123
       MSSQL_PID: Developer
+  elasticsearch:
+    image: elasticsearch:7.10.1
+    container_name: "elasticsearch"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      "discovery.type": "single-node"
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+  kibana:
+    image: kibana:7.10.1
+    container_name: "kibana"
+    ports:
+      - "5601:5601"
+    environment:
+      SERVER_NAME: kibana
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
 volumes:
   pgdata:
+    external: true
+  elasticsearch:
     external: true
 networks:
       default:
