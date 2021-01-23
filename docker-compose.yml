@@ -45,12 +45,17 @@ services:
     environment:
       SERVER_NAME: kibana
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+  redis:
+    image: redis:6
+    container_name: "redis"
+    ports:
+      - "6379:6379"
 volumes:
   pgdata:
     external: true
   elasticsearch:
     external: true
 networks:
-      default:
-        external:
-          name: local-network
+  default:
+    external:
+      name: local-network
